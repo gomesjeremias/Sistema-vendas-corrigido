@@ -1,0 +1,15 @@
+services:
+  - type: web
+    name: sistema-vendas-api
+    env: node
+    region: oregon
+    plan: free
+    buildCommand: cd backend && npm install
+    startCommand: node backend/server.js
+    envVars:
+      - key: PORT
+        value: 10000
+      - key: JWT_SECRET
+        value: sua_chave_super_secreta
+      - key: DATABASE_URL
+        value: <URL do seu banco - ex: PostgreSQL ou MongoDB Atlas>
