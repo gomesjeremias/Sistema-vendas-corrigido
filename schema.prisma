@@ -1,0 +1,103 @@
+// This is your Prisma schema file,
+// learn more about it in the docs: https://pris.ly/d/prisma-schema
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "mongodb"
+  url      = env("DATABASE_URL")
+}
+
+model User {
+  id        String   @id @default(auto()) @map("_id") @db.ObjectId
+  email     String   @unique
+  password  String
+  name      String
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  @@map("users")
+}
+
+model Cliente {
+  id        String   @id @default(auto()) @map("_id") @db.ObjectId
+  nome      String
+  email     String
+  telefone  String?
+  endereco  String?
+  cpfCnpj   String   @unique
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  // Relacionamento com vendas
+  vendas    Venda[]
+
+  @@map("clientes")
+}
+
+model Fornecedor {
+  id        String   @id @default(auto()) @map("_id") @db.ObjectId
+  nome      String
+  email     String
+  telefone  String?
+  endereco  String?
+  cnpj      String   @unique
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  // Relacionamento com produtos
+  produtos  Produto[]
+
+  @@map("fornecedores")
+}
+
+model Produto {
+  id           String    @id @default(auto()) @map("_id") @db.ObjectId
+  nome         String
+  descricao    String?
+  preco        Float
+  categoria    String
+  estoque      Int       @default(0)
+  fornecedorId String    @db.ObjectId
+  createdAt    DateTime  @default(now())
+  updatedAt    DateTime  @updatedAt
+
+  // Relacionamentos
+  fornecedor   Fornecedor @relation(fields: [fornecedorId], references: [id])
+  itensVenda   ItemVenda[]
+
+  @@map("produtos")
+}
+
+model Venda {
+  id         String    @id @default(auto()) @map("_id") @db.ObjectId
+  clienteId  String    @db.ObjectId
+  total      Float
+  status     String    @default("A_PAGAR") // "A_PAGAR" ou "PAGO"
+  dataVenda  DateTime  @default(now())
+  createdAt  DateTime  @default(now())
+  updatedAt  DateTime  @updatedAt
+
+  // Relacionamentos
+  cliente    Cliente   @relation(fields: [clienteId], references: [id])
+  itens      ItemVenda[]
+
+  @@map("vendas")
+}
+
+model ItemVenda {
+  id         String    @id @default(auto()) @map("_id") @db.ObjectId
+  vendaId    String    @db.ObjectId
+  produtoId  String    @db.ObjectId
+  quantidade Int
+  precoUnit  Float
+  subtotal   Float
+
+  // Relacionamentos
+  venda      Venda     @relation(fields: [vendaId], references: [id])
+  produto    Produto   @relation(fields: [produtoId], references: [id])
+
+  @@map("itens_venda")
+}

@@ -1,0 +1,395 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Sistema de Vendas Online</title>
+    <link rel="stylesheet" href="styles.css">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+</head>
+<body>
+    <!-- Tela de Login -->
+    <div id="login-screen" class="screen active">
+        <div class="login-container">
+            <div class="login-card">
+                <div class="login-header">
+                    <i class="fas fa-shopping-cart"></i>
+                    <h1>Sistema de Vendas</h1>
+                    <p>Faça login para acessar o sistema</p>
+                </div>
+                
+                <form id="login-form" class="login-form">
+                    <div class="form-group">
+                        <label for="login-email">Email</label>
+                        <input type="email" id="login-email" name="email" required>
+                    </div>
+                    
+                    <div class="form-group">
+                        <label for="login-password">Senha</label>
+                        <input type="password" id="login-password" name="password" required>
+                    </div>
+                    
+                    <button type="submit" class="btn btn-primary">
+                        <i class="fas fa-sign-in-alt"></i>
+                        Entrar
+                    </button>
+                </form>
+                
+                <div class="login-footer">
+                    <p>Não tem uma conta? 
+                        <a href="#" id="show-register">Cadastre-se aqui</a>
+                    </p>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Tela de Cadastro -->
+    <div id="register-screen" class="screen">
+        <div class="login-container">
+            <div class="login-card">
+                <div class="login-header">
+                    <i class="fas fa-user-plus"></i>
+                    <h1>Criar Conta</h1>
+                    <p>Cadastre-se para acessar o sistema</p>
+                </div>
+                
+                <form id="register-form" class="login-form">
+                    <div class="form-group">
+                        <label for="register-name">Nome Completo</label>
+                        <input type="text" id="register-name" name="name" required>
+                    </div>
+                    
+                    <div class="form-group">
+                        <label for="register-email">Email</label>
+                        <input type="email" id="register-email" name="email" required>
+                    </div>
+                    
+                    <div class="form-group">
+                        <label for="register-password">Senha</label>
+                        <input type="password" id="register-password" name="password" required>
+                    </div>
+                    
+                    <button type="submit" class="btn btn-primary">
+                        <i class="fas fa-user-plus"></i>
+                        Cadastrar
+                    </button>
+                </form>
+                
+                <div class="login-footer">
+                    <p>Já tem uma conta? 
+                        <a href="#" id="show-login">Faça login aqui</a>
+                    </p>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Sistema Principal -->
+    <div id="main-system" class="screen">
+        <!-- Header -->
+        <header class="header">
+            <div class="header-left">
+                <i class="fas fa-shopping-cart"></i>
+                <h1>Sistema de Vendas</h1>
+            </div>
+            <div class="header-right">
+                <span id="user-name">Usuário</span>
+                <div class="dropdown">
+                    <button class="btn btn-secondary dropdown-toggle">
+                        <i class="fas fa-user"></i>
+                    </button>
+                    <div class="dropdown-menu">
+                        <a href="#" id="change-password-btn">
+                            <i class="fas fa-key"></i>
+                            Alterar Senha
+                        </a>
+                        <a href="#" id="logout-btn">
+                            <i class="fas fa-sign-out-alt"></i>
+                            Sair
+                        </a>
+                    </div>
+                </div>
+            </div>
+        </header>
+
+        <!-- Sidebar -->
+        <aside class="sidebar">
+            <nav class="nav">
+                <a href="#" class="nav-item active" data-section="dashboard">
+                    <i class="fas fa-chart-dashboard"></i>
+                    Dashboard
+                </a>
+                <a href="#" class="nav-item" data-section="clientes">
+                    <i class="fas fa-users"></i>
+                    Clientes
+                </a>
+                <a href="#" class="nav-item" data-section="fornecedores">
+                    <i class="fas fa-truck"></i>
+                    Fornecedores
+                </a>
+                <a href="#" class="nav-item" data-section="produtos">
+                    <i class="fas fa-box"></i>
+                    Produtos
+                </a>
+                <a href="#" class="nav-item" data-section="vendas">
+                    <i class="fas fa-shopping-bag"></i>
+                    Vendas
+                </a>
+            </nav>
+        </aside>
+
+        <!-- Main Content -->
+        <main class="main-content">
+            <!-- Dashboard -->
+            <section id="dashboard-section" class="content-section active">
+                <div class="section-header">
+                    <h2>Dashboard</h2>
+                    <p>Visão geral do sistema</p>
+                </div>
+
+                <div class="stats-grid">
+                    <div class="stat-card">
+                        <div class="stat-icon">
+                            <i class="fas fa-dollar-sign"></i>
+                        </div>
+                        <div class="stat-content">
+                            <h3 id="total-a-pagar">R$ 0,00</h3>
+                            <p>Total a Pagar</p>
+                        </div>
+                    </div>
+                    
+                    <div class="stat-card">
+                        <div class="stat-icon">
+                            <i class="fas fa-check-circle"></i>
+                        </div>
+                        <div class="stat-content">
+                            <h3 id="total-pago">R$ 0,00</h3>
+                            <p>Total Pago</p>
+                        </div>
+                    </div>
+                    
+                    <div class="stat-card">
+                        <div class="stat-icon">
+                            <i class="fas fa-users"></i>
+                        </div>
+                        <div class="stat-content">
+                            <h3 id="total-clientes">0</h3>
+                            <p>Clientes</p>
+                        </div>
+                    </div>
+                    
+                    <div class="stat-card">
+                        <div class="stat-icon">
+                            <i class="fas fa-shopping-bag"></i>
+                        </div>
+                        <div class="stat-content">
+                            <h3 id="total-vendas">0</h3>
+                            <p>Vendas</p>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="dashboard-grid">
+                    <div class="dashboard-card">
+                        <h3>Vendas Mensais</h3>
+                        <canvas id="vendas-chart"></canvas>
+                    </div>
+                    
+                    <div class="dashboard-card">
+                        <h3>Clientes "A Pagar"</h3>
+                        <div id="clientes-a-pagar" class="list-container">
+                            <!-- Lista será preenchida via JavaScript -->
+                        </div>
+                    </div>
+                    
+                    <div class="dashboard-card">
+                        <h3>Clientes "Pago"</h3>
+                        <div id="clientes-pago" class="list-container">
+                            <!-- Lista será preenchida via JavaScript -->
+                        </div>
+                    </div>
+                    
+                    <div class="dashboard-card">
+                        <h3>Produtos com Estoque Baixo</h3>
+                        <div id="produtos-estoque-baixo" class="list-container">
+                            <!-- Lista será preenchida via JavaScript -->
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Clientes -->
+            <section id="clientes-section" class="content-section">
+                <div class="section-header">
+                    <h2>Gestão de Clientes</h2>
+                    <button class="btn btn-primary" id="add-cliente-btn">
+                        <i class="fas fa-plus"></i>
+                        Novo Cliente
+                    </button>
+                </div>
+
+                <div class="table-container">
+                    <table id="clientes-table" class="data-table">
+                        <thead>
+                            <tr>
+                                <th>Nome</th>
+                                <th>Email</th>
+                                <th>Telefone</th>
+                                <th>CPF/CNPJ</th>
+                                <th>Ações</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <!-- Dados serão preenchidos via JavaScript -->
+                        </tbody>
+                    </table>
+                </div>
+            </section>
+
+            <!-- Fornecedores -->
+            <section id="fornecedores-section" class="content-section">
+                <div class="section-header">
+                    <h2>Gestão de Fornecedores</h2>
+                    <button class="btn btn-primary" id="add-fornecedor-btn">
+                        <i class="fas fa-plus"></i>
+                        Novo Fornecedor
+                    </button>
+                </div>
+
+                <div class="table-container">
+                    <table id="fornecedores-table" class="data-table">
+                        <thead>
+                            <tr>
+                                <th>Nome</th>
+                                <th>Email</th>
+                                <th>Telefone</th>
+                                <th>CNPJ</th>
+                                <th>Ações</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <!-- Dados serão preenchidos via JavaScript -->
+                        </tbody>
+                    </table>
+                </div>
+            </section>
+
+            <!-- Produtos -->
+            <section id="produtos-section" class="content-section">
+                <div class="section-header">
+                    <h2>Gestão de Produtos</h2>
+                    <button class="btn btn-primary" id="add-produto-btn">
+                        <i class="fas fa-plus"></i>
+                        Novo Produto
+                    </button>
+                </div>
+
+                <div class="table-container">
+                    <table id="produtos-table" class="data-table">
+                        <thead>
+                            <tr>
+                                <th>Nome</th>
+                                <th>Categoria</th>
+                                <th>Preço</th>
+                                <th>Estoque</th>
+                                <th>Fornecedor</th>
+                                <th>Ações</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <!-- Dados serão preenchidos via JavaScript -->
+                        </tbody>
+                    </table>
+                </div>
+            </section>
+
+            <!-- Vendas -->
+            <section id="vendas-section" class="content-section">
+                <div class="section-header">
+                    <h2>Gestão de Vendas</h2>
+                    <div class="section-actions">
+                        <button class="btn btn-primary" id="add-venda-btn">
+                            <i class="fas fa-plus"></i>
+                            Nova Venda
+                        </button>
+                        <button class="btn btn-danger" id="clear-vendas-btn">
+                            <i class="fas fa-trash"></i>
+                            Limpar Vendas
+                        </button>
+                    </div>
+                </div>
+
+                <div class="table-container">
+                    <table id="vendas-table" class="data-table">
+                        <thead>
+                            <tr>
+                                <th>Data</th>
+                                <th>Cliente</th>
+                                <th>Total</th>
+                                <th>Status</th>
+                                <th>Ações</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <!-- Dados serão preenchidos via JavaScript -->
+                        </tbody>
+                    </table>
+                </div>
+            </section>
+        </main>
+    </div>
+
+    <!-- Modal para Alterar Senha -->
+    <div id="change-password-modal" class="modal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h3>Alterar Senha</h3>
+                <button class="modal-close">&times;</button>
+            </div>
+            <form id="change-password-form">
+                <div class="form-group">
+                    <label for="current-password">Senha Atual</label>
+                    <input type="password" id="current-password" name="currentPassword" required>
+                </div>
+                <div class="form-group">
+                    <label for="new-password">Nova Senha</label>
+                    <input type="password" id="new-password" name="newPassword" required>
+                </div>
+                <div class="modal-actions">
+                    <button type="button" class="btn btn-secondary modal-cancel">Cancelar</button>
+                    <button type="submit" class="btn btn-primary">Alterar Senha</button>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <!-- Modal Genérico para CRUD -->
+    <div id="crud-modal" class="modal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h3 id="modal-title">Título</h3>
+                <button class="modal-close">&times;</button>
+            </div>
+            <div id="modal-body">
+                <!-- Conteúdo será preenchido via JavaScript -->
+            </div>
+        </div>
+    </div>
+
+    <!-- Loading Overlay -->
+    <div id="loading-overlay" class="loading-overlay">
+        <div class="loading-spinner">
+            <i class="fas fa-spinner fa-spin"></i>
+            <p>Carregando...</p>
+        </div>
+    </div>
+
+    <!-- Toast Notifications -->
+    <div id="toast-container" class="toast-container"></div>
+
+    <script src="script.js"></script>
+</body>
+</html>
+
