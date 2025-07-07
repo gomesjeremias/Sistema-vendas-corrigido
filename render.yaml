@@ -12,4 +12,4 @@ services:
       - key: JWT_SECRET
         value: sua_chave_super_secreta
       - key: DATABASE_URL
-        value: <URL do seu banco - ex: PostgreSQL ou MongoDB Atlas>
+        value: <"mongodb+srv://gomesjeremias:fIMwscYyfYUIXk66@cluster0.9teak4r.mongodb.net/Users?retryWrites=true&w=majority&appName=Cluster0">
